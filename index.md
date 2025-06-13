@@ -5,6 +5,7 @@
 layout: default
 ---
 
+<a href="{{ '/about/' | relative_url }}">About Me</a>
 <ul>
   {% for post in site.posts %}
     <li>
