@@ -152,7 +152,7 @@ const configuration = defineCollection({
       /**
        * The subtitle displayed in the hero section.
        */
-      subtitle: z.string().default("Retro-Inspired Theme &<br>Built for Astro"),
+      subtitle: z.string().default(""),
 
       /**
        * The URL of the hero image, used as a background image in the hero section.
