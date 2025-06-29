@@ -1,0 +1,40 @@
+---
+title: 'Pwntools template'
+description: 'This is the template I use for pwntools!'
+date: 2025-06-29
+tags: ['ctf']
+authors: ['amcsz']
+---
+
+Template I use for pwntools. Might edit it later on.
+
+```python
+from pwn import *
+
+context.log_level = 'debug'
+context.binary = elf = ELF('./vuln')
+context.terminal = ['gnome-terminal', '-e']
+# libc = ELF('./libc.so.6')
+
+USE_REMOTE = False
+REMOTE_HOST = 'hostname'
+REMOTE_PORT = 1337
+
+USE_GDB = True
+GDB_SCRIPT = """
+"""
+
+def start():
+    if USE_REMOTE:
+        return remote(REMOTE_HOST, REMOTE_PORT)
+    p = process(elf.path)
+    if USE_GDB:
+        gdb.attach(p, GDB_SCRIPT)
+    return p
+
+p = start()
+
+# exploit goes here
+
+p.interactive()
+```

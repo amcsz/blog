@@ -1,64 +1,52 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Hero from "../components/home/Hero.astro";
-import Section from "../components/common/Section.astro";
-import FeaturedProjects from "../components/home/FeaturedProjects.astro";
-import FeaturedArticles from "../components/home/FeaturedArticles.astro";
-import { getConfigurationCollection } from "../lib/utils";
-import { getCollection } from "astro:content";
+import BlogCard from '@/components/BlogCard.astro'
+import Link from '@/components/Link.astro'
+import PageHead from '@/components/PageHead.astro'
+import { buttonVariants } from '@/components/ui/button'
+import { SITE } from '@/consts'
+import Layout from '@/layouts/Layout.astro'
+import { getRecentPosts } from '@/lib/data-utils'
 
-
-const { data: config } = await getConfigurationCollection();
-
-const featuredProjects = (await getCollection("project", (e) => e.data.featured)).map((e) => ({
-  ...e.data,
-  url: `${config.site.baseUrl}/projects/${e.data.slug}`,
-}));
-const featuredArticles = (await getCollection("blog", (e) => e.data.featured)).map((e) => ({
-  ...e.data,
-  url: `${config.site.baseUrl}/blog/${e.data.slug}`
-}));
+const blog = await getRecentPosts(SITE.featuredPostCount)
 ---
 
-<Layout>
-  <Fragment slot="head">
-    <title>{config.globalMeta.title}</title>
-    <meta
-      name="description"
-      content={config.globalMeta.longDescription ?? config.globalMeta.description}
-    />
-    <meta property="og:title" content={config.globalMeta.title} />
-    <meta
-      property="og:description"
-      content={config.globalMeta.description}
-    />
-    {config.globalMeta.keywords && (
-      <meta name="keywords" content={config.globalMeta.keywords.join(", ")} />
-    )}
-    {config.globalMeta.cardImage && (
-      <meta property="og:image" content={config.globalMeta.cardImage} />
-    )}
-    <meta property="og:url" content={config.site.baseUrl} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={config.globalMeta.title} />
-    <meta
-      name="twitter:description"
-      content={config.globalMeta.description}
-    />
-    {config.globalMeta.cardImage && (
-      <meta name="twitter:image" content={config.globalMeta.cardImage} />
-    )}
-    <meta http-equiv="content-language" content="en" />
-    <meta name="language" content="English" />
-    <link rel="canonical" href={config.site.baseUrl} />
-  </Fragment>
-  <Section class="my-16">
-    <Hero />
-  </Section>
-  <Section>
-    <FeaturedProjects featuredProjects={featuredProjects} />
-  </Section>
-  <Section>
-    <FeaturedArticles featuredArticles={featuredArticles} />
-  </Section>
+<Layout class="max-w-3xl">
+  <PageHead slot="head" title="Home" />
+  <section>
+    <div class="rounded-lg border">
+      <div class="flex flex-col space-y-1.5 p-6">
+        <h3 class="text-3xl leading-none font-medium">hey there! i'm amcsz</h3>
+      </div>
+      <div class="p-6 pt-0">
+        <p class="text-muted-foreground mb-2 text-sm">
+            Welcome to my website! I go by Samuel in real life, but my online name is usually amcsz or flashybolt. I am currently studying in high school as a sophomore. I'm really passionate about programming and cybersecurity, so that's what I spend most of my time doing. 
+            <br><br>
+            Outside of computer-related things, I also enjoying playing the diabolo (chinese yo-yo) and spending time with my cat. I'll also be posting writeups among other miscellaneous things on this website if you want to check them out.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="flex flex-col gap-y-4">
+    <h2 class="text-2xl font-medium">Latest posts</h2>
+    <ul class="flex flex-col gap-y-4">
+      {
+        blog.map((post) => (
+          <li>
+            <BlogCard entry={post} />
+          </li>
+        ))
+      }
+    </ul>
+    <div class="flex justify-center">
+      <Link
+        href="/blog"
+        class={buttonVariants({ variant: 'ghost' }) + ' group'}
+      >
+        See all posts <span
+          class="ml-1.5 transition-transform group-hover:translate-x-1"
+          >&rarr;</span
+        >
+      </Link>
+    </div>
+  </section>
 </Layout>

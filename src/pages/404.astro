@@ -1,53 +1,29 @@
 ---
-import Section from "../components/common/Section.astro";
-import Layout from "../layouts/Layout.astro";
-import { getConfigurationCollection } from "../lib/utils";
-
-const { data: config } = await getConfigurationCollection();
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import Link from '@/components/Link.astro'
+import PageHead from '@/components/PageHead.astro'
+import { buttonVariants } from '@/components/ui/button'
+import Layout from '@/layouts/Layout.astro'
+import { cn } from '@/lib/utils'
 ---
 
-<Layout>
-  <Fragment slot="head">
-    <title>{config.notFoundMeta.title}</title>
-    <meta
-      name="description"
-      content={config.notFoundMeta.longDescription ?? config.notFoundMeta.description}
-    />
-    <meta property="og:title" content={config.notFoundMeta.title} />
-    <meta
-      property="og:description"
-      content={config.notFoundMeta.description}
-    />
-    {config.notFoundMeta.keywords && (
-      <meta name="keywords" content={config.notFoundMeta.keywords.join(", ")} />
-    )}
-    {config.notFoundMeta.cardImage && (
-      <meta property="og:image" content={config.notFoundMeta.cardImage} />
-    )}
-    <meta property="og:url" content={config.site.baseUrl} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={config.notFoundMeta.title} />
-    <meta
-      name="twitter:description"
-      content={config.notFoundMeta.description}
-    />
-    {config.notFoundMeta.cardImage && (
-      <meta name="twitter:image" content={config.notFoundMeta.cardImage} />
-    )}
-    <meta http-equiv="content-language" content="en" />
-    <meta name="language" content="English" />
-    <link rel="canonical" href={config.site.baseUrl} />
-  </Fragment>
-  <Section class="mt-16">
-    <h1 class="text-3xl sm:text-4xl font-display pb-8">
-      Well, this is awkward
-    </h1>
-    <h2 class="text-xl sm:text-2xl pb-8">404 - Page not found</h2>
-    <p>
-      It seems that this page does not exist. If you want to return to safety, <a
-        class="underline underline-offset-4 font-medium"
-        href="/">click here to go home</a
-      >.
-    </p>
-  </Section>
+<Layout class="max-w-3xl">
+  <PageHead slot="head" title="404" />
+  <Breadcrumbs items={[{ label: '???', icon: 'lucide:circle-help' }]} />
+
+  <section
+    class="flex flex-col items-center justify-center gap-y-4 text-center"
+  >
+    <div class="max-w-md">
+      <h1 class="mb-4 text-3xl font-medium">404: Page not found</h1>
+      <p class="prose">Oops! The page you're looking for doesn't exist.</p>
+    </div>
+    <Link
+      href="/"
+      class={cn(buttonVariants({ variant: 'outline' }), 'flex gap-x-1.5 group')}
+    >
+      <span class="transition-transform group-hover:-translate-x-1">&larr;</span
+      > Go to home page
+    </Link>
+  </section>
 </Layout>
