@@ -1,10 +1,14 @@
 ---
-layout: post
-title:  "pwntools templates for quick reference"
-date:   2025-06-13 11:05:00 -0400
-tags: ctf
+title: Pwntools template for linux
+slug: pwntools-template
+description: My pwntools template.
+cardImage: "https://amcsz.me/pwntools.png"
+tags: ["code", "html"]
+readTime: 5
+featured: true
+timestamp: 2025-06-29T10:38:00-05:00
 ---
-Pwntools template that I use on fedora:
+This is a pwntools template I use for pwn challs. I use GNOME on fedora 42, but you can edit the settings to make it work on your machine. Supports remote + gdb.
 ```python
 from pwn import *
 

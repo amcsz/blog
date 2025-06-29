@@ -1,10 +1,14 @@
 ---
-layout: post
-title:  "picoCTF 2025 Echo Valley Writeup"
-date:   2025-06-13 11:33:24 -0400
-tags: ctf
+title: picoCTF 2025 Echo Valley Writeup
+slug: picoctf-2025-echo-valley
+description: A writeup for the echo valley challenge for picoctf 2025.
+cardImage: "https://amcsz.me/echo-valley.png"
+tags: ["ctf", "pwn"]
+readTime: 15
+featured: true
+timestamp: 2025-06-29T10:51:00-05:00
 ---
-Solve script:
+Solve script (too lazy to annotate, but you can try to decipher it if you'd like):
 ```python
 import re
 from pwn import *
