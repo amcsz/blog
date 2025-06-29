@@ -110,4 +110,5 @@ export default defineConfig({
     ],
     remarkPlugins: [remarkMath, remarkEmoji],
   },
+    site: 'https://amcsz.me',
 })
